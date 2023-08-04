@@ -6,6 +6,7 @@
 </script>
 
 <main class="bg-main w-screen">
+  <Navbar />
 	<Hero />
 	<Projects />
 	<TeckStack />
