@@ -1,4 +1,5 @@
 <script lang="ts">
+	import {onMount} from 'svelte'
 	import Navbar from "./Navbar.svelte"
 	import me1 from "../assets/me1.jpg"
 	import me4 from "../assets/me4.jpg"
@@ -43,18 +44,29 @@
 		}
 	}
 	typewriter()
+	let absoluteRef: HTMLDivElement | undefined
+	let height:number
+	
+	onMount(() => {
+		height = absoluteRef.clientHeight
+
+		window.addEventListener('resize', (e) => {
+			height = absoluteRef.clientHeight
+		})
+	})
 </script>
 
-<header class="relative">
+<header class={`relative`} style={`height:${height}px ;`}>
 	<Navbar />
 	<div class="absolute w-full top-0 left-0">
-		<div class="relative max-w-[1920px] w-full h-96 md:h-fit xl:h-screen md:max-h-[1080px] overflow-hidden mx-auto">
+		<div class="relative max-w-[1920px] w-full h-96 md:h-fit xl:h-screen md:max-h-[1080px] overflow-hidden mx-auto" bind:this={absoluteRef}>
 			<div class="absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-y-3 md:space-y-16">
 				<p class=" w-screen text-center text-white text-5xl md:text-[5rem] font-black md:font-bold">
 					Hey there, <span class="inline-block animate-wave origin-bottom">👋</span>
 				</p>
-				<p class="h-[1ch] w-screen text-center text-white text-3xl md:text-6xl lg:text-[5rem] font-bold md:font-medium" ><span class="border-r-2 md:border-r-4 border-red-500 pr-2">{typer}</span></p>
+				<p class="h-[1ch] w-screen text-center text-white text-2xl md:text-6xl lg:text-[5rem] font-bold md:font-medium" ><span class="border-r-2 md:border-r-4 border-red-500 pr-2">{typer}</span></p>
 			</div>
+			<p class="absolute z-10 left-1/2 bottom-10 -translate-x-1/2 text-2xl pt-2 animate-bounce" on:click={() => console.log('hello world')}>👇</p>
 			<Carousel
 				autoplay
 				infinite
